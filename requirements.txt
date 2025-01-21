@@ -1,8 +1,6 @@
 deepface
 numpy
 Streamlit
-opencv-python
-python==3.90
-
+opencv-contrib-python
 
 
