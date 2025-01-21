@@ -1,6 +1,8 @@
-opencv-python==4.11.0.86
 deepface==0.0.93
 numpy==1.26.4
+Streamlit
+opencv-python
+opencv-contrib-python
 
 
 
