@@ -1,6 +1,5 @@
 deepface
 numpy
 Streamlit
-opencv
-
+opencv-python==4.5.1.48
 
