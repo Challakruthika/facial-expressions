@@ -1,5 +1,5 @@
-deepface
-numpy
-Streamlit
-opencv-python
+opencv-python==4.5.5.64
+deepface==0.0.75
+numpy==1.21.2
+streamlit==1.25.0
 
