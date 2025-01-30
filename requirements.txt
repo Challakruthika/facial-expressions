@@ -1,5 +1,6 @@
 opencv-python-headless
-deepface==0.0.75
-numpy==1.21.2
-streamlit==1.25.0
+streamlit
+deepface
+Pillow
+
 
