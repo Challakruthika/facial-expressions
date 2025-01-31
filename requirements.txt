@@ -1,6 +1,6 @@
-opencv-python-headless
+--no-cache-dir
 streamlit
-deepface
-Pillow
+numpy
+pandas
 
 
