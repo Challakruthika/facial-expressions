@@ -1,6 +1,6 @@
---no-cache-dir
-streamlit
+opencv-python
+deepface
 numpy
-pandas
+streamlit
 
 
