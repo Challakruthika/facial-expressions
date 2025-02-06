@@ -1,5 +1,4 @@
-opencv-python
-deepface
+opencv-python-headless
 numpy
 streamlit
 
