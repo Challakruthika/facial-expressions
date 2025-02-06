@@ -32,3 +32,4 @@ EXPOSE 8501
 
 # Command to run the application
 CMD ["python", "app.py"]
+
