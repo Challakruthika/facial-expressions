@@ -1,5 +1,5 @@
 opencv-python-headless
-Deep face
+Deepface
 numpy
 streamlit
 
