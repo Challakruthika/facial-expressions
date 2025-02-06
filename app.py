@@ -1,3 +1,4 @@
+import os
 import cv2
 from deepface import DeepFace
 import numpy as np
@@ -58,4 +59,9 @@ if start_button:
     # Release resources
     cap.release()
     cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8501))
+    st.run(port=port)
+
 
