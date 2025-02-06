@@ -1,38 +1,61 @@
 import cv2
-import streamlit as st
 from deepface import DeepFace
-from PIL import Image
+import numpy as np
+import streamlit as st
 
-def main():
-    st.title("Face Expression Recognition")
-    run = st.checkbox('Run')
-    FRAME_WINDOW = st.image([])
+# Initialize Streamlit app
+st.title("Emotion Recognition App")
+st.text("Press 'Start' to begin emotion recognition")
 
-    cap = cv2.VideoCapture(0)
+# Initialize webcam capture
+cap = cv2.VideoCapture(0)
 
+# Initialize face detector (Haar Cascade or Dlib can be used)
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+start_button = st.button('Start')
+stop_button = st.button('Stop')
+
+if start_button:
     while True:
-        if run:
-            ret, frame = cap.read()
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-            try:
-                result = DeepFace.analyze(frame, actions=['emotion'])
-                face_count = len(result)
-                for face in result:
-                    (x, y, w, h) = face["region"]["x"], face["region"]["y"], face["region"]["w"], face["region"]["h"]
-                    emotion = face["dominant_emotion"]
-                    score = face["emotion"][emotion]
-                    cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                    cv2.putText(frame, f"{emotion}: {score:.2f}", (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
-                
-                st.text(f"People count: {face_count}")
-            except Exception as e:
-                st.error(f"Error: {e}")
-
-            FRAME_WINDOW.image(frame)
-        else:
-            cap.release()
+        ret, frame = cap.read()
+        if not ret:
             break
 
-if __name__ == "__main__":
-    main()
+        # Convert to grayscale for face detection
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # Detect faces
+        faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+
+        # Count the number of faces
+        people_count = len(faces)
+
+        for (x, y, w, h) in faces:
+            # Draw a rectangle around each face
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+            # Crop the face from the frame for emotion detection
+            face_region = frame[y:y+h, x:x+w]
+
+            # Emotion detection
+            result = DeepFace.analyze(face_region, actions=['emotion'], enforce_detection=False)
+            dominant_emotion = result[0]['dominant_emotion']
+            
+            # Display emotion text on the face
+            cv2.putText(frame, dominant_emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+        # Display the people count on the frame
+        cv2.putText(frame, f'People count: {people_count}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+        # Display the resulting frame in Streamlit
+        st.image(frame, channels="BGR")
+
+        # Stop if 'Stop' button is pressed
+        if stop_button:
+            break
+
+    # Release resources
+    cap.release()
+    cv2.destroyAllWindows()
+
