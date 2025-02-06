@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libsm6 \
     libxext6 \
     libxrender-dev \
+    libopencv-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -31,4 +32,3 @@ EXPOSE 8501
 
 # Command to run the application
 CMD ["python", "app.py"]
-
