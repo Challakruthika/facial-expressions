@@ -1,6 +1,6 @@
 opencv-python-headless
-Deepface
 numpy
 streamlit
+keras==2.4.3
 
 
