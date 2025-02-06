@@ -1,8 +1,8 @@
 opencv-python-headless
 numpy
 streamlit==1.4.0
-keras==2.4.3
 deepface
+keras==2.12.0
 
 
 
